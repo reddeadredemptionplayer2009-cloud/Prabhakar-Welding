@@ -534,6 +534,18 @@
   }
   .socials a svg{width:16px;height:16px;}
   .socials a:hover{background:rgba(255,255,255,0.12);}
+
+/* WhatsApp floating button */
+.whatsapp-float{position:fixed;right:20px;bottom:20px;z-index:9999;display:flex;align-items:center;gap:9px;padding:12px 17px;border-radius:999px;background:#25D366;color:#fff;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 8px 25px rgba(0,0,0,.28);transition:transform .2s ease,box-shadow .2s ease;}
+.whatsapp-float:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.35);}
+.whatsapp-icon{width:24px;height:24px;display:block;}
+@media(max-width:600px){.whatsapp-float{right:14px;bottom:14px;padding:13px;border-radius:50%;}.whatsapp-float span{display:none;}}
+
+</style>
+
+<style>
+.whatsapp-float{position:fixed;right:18px;bottom:18px;z-index:9999;display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:999px;text-decoration:none;font-weight:700;color:#fff;background:#25D366;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+.whatsapp-float:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
@@ -758,6 +770,8 @@
   </div>
 </section>
 
+<a class="whatsapp-float" href="https://wa.me/918526275076" target="_blank" rel="noopener" aria-label="WhatsApp Prabhakar Welding">WhatsApp</a>
+
 <!-- Contact -->
 <section id="contact">
   <div class="container">
@@ -785,14 +799,14 @@
         </div>
       </div>
 
-      <form class="contact-form glass" onsubmit="return false;">
+      <form class="contact-form glass" id="quoteForm">
         <div class="form-row">
-          <div class="field"><label>Name</label><input type="text" placeholder="Your name"></div>
-          <div class="field"><label>Phone</label><input type="tel" placeholder="Your phone number"></div>
+          <div class="field"><label>Name</label><input id="quoteName" type="text" placeholder="Your name" required></div>
+          <div class="field"><label>Phone</label><input id="quotePhone" type="tel" placeholder="Your phone number" required></div>
         </div>
         <div class="form-row">
           <div class="field full"><label>Type of work</label>
-            <select>
+            <select id="quoteWork">
               <option>Structural steel</option>
               <option>Custom fabrication</option>
               <option>Finishing / prep</option>
@@ -801,9 +815,9 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="field full"><label>Project details</label><textarea placeholder="Tell us a bit about the job — size, location, timeline..."></textarea></div>
+          <div class="field full"><label>Project details</label><textarea id="quoteDetails" placeholder="Tell us a bit about the job — size, location, timeline..." required></textarea></div>
         </div>
-        <button class="submit-btn" type="submit">Send Request</button>
+        <button class="submit-btn" type="submit">Send Request on WhatsApp</button>
         <p class="form-note">We usually reply within one business day.</p>
       </form>
     </div>
@@ -829,8 +843,8 @@
      Change ONLY this phone number when needed.
      Format: digits only, separated by / if there are two numbers.
      ========================= */
-  const BUSINESS_PHONE = "<span data-business-phone>9003375941 / 8526275076</span>";
-  const PRIMARY_PHONE = "<a data-primary-phone href="tel:9003375941">9003375941</a>";
+  const BUSINESS_PHONE = "9003375941 / 8526275076";
+  const PRIMARY_PHONE = "9003375941";
 
   // Update every phone-number placeholder on the page.
   document.querySelectorAll("[data-business-phone]").forEach(el => {
@@ -842,6 +856,16 @@
   });
   document.querySelectorAll('.mobile-menu a').forEach(a=>{
     a.addEventListener('click', ()=> document.getElementById('mmenu').classList.remove('open'));
+  });
+
+  document.getElementById('quoteForm')?.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name=document.getElementById('quoteName').value.trim();
+    const phone=document.getElementById('quotePhone').value.trim();
+    const work=document.getElementById('quoteWork').value;
+    const details=document.getElementById('quoteDetails').value.trim();
+    const message=`Prabhakar Welding – New Quote Request\n\nName: ${name}\nCustomer phone: ${phone}\nType of work: ${work}\nProject details: ${details}`;
+    window.open('https://wa.me/918526275076?text='+encodeURIComponent(message),'_blank');
   });
 </script>
 
